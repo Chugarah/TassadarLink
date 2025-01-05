@@ -7,7 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Helpers\" />
       <Folder Include="Interfaces\" />
+      <Folder Include="Views\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Core\Core.csproj" />
     </ItemGroup>
 
 </Project>
