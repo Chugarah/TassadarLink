@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{6FE9F6B2-316A-4C56-B090-F0B41A4E40FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Console\Console.csproj", "{788FC50F-9DC7-4EE9-9EFC-0DA1BE2E1EEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexus", "Nexus\Nexus.csproj", "{943135B3-8AAB-4205-951A-F575F1E7A09A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +32,9 @@ Global
 		{6FE9F6B2-316A-4C56-B090-F0B41A4E40FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FE9F6B2-316A-4C56-B090-F0B41A4E40FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FE9F6B2-316A-4C56-B090-F0B41A4E40FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{788FC50F-9DC7-4EE9-9EFC-0DA1BE2E1EEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{788FC50F-9DC7-4EE9-9EFC-0DA1BE2E1EEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{788FC50F-9DC7-4EE9-9EFC-0DA1BE2E1EEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{788FC50F-9DC7-4EE9-9EFC-0DA1BE2E1EEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{943135B3-8AAB-4205-951A-F575F1E7A09A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943135B3-8AAB-4205-951A-F575F1E7A09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943135B3-8AAB-4205-951A-F575F1E7A09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943135B3-8AAB-4205-951A-F575F1E7A09A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
