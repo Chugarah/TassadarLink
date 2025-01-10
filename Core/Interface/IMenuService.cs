@@ -5,10 +5,11 @@ namespace Core.Interface;
 
 public interface IMenuCreateService
 {
-   Task<MenuItemDto> CreateMenuItem(MenuItem menuItem);
+    public MenuItemDto CreateMenuItem(MenuItem menuItem);
+    public void GenerateMenuItems(string route);
 }
 
 public interface IGetMenuService
 {
-    Task<IEnumerable<MenuItemDto>> GetMenuItems();
+    IEnumerable<MenuItemDto> GetMenuItems();
 }

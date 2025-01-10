@@ -2,10 +2,14 @@
 
 namespace Nexus.Views;
 
-public class HomeView : IHomeView
+public class HomeView(IMenuNavigationService menuNavigationService) : IHomeView
 {
     public void Run()
     {
-        Console.WriteLine("Welcome to the Home View!");
+        Console.Clear();
+        Console.WriteLine("===================================== Tassadar Link System =====================================");
+        Console.WriteLine("Welcome Tassadar, what do you want to do today? \n");
+        menuNavigationService.DisplayMenu("nexus");
+        Console.WriteLine("================================================================================================");
     }
 }
