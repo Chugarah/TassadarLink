@@ -1,5 +1,6 @@
 ﻿using Core.DTOs;
 using Core.Interface;
+using Infrastructure.Interfaces;
 using Nexus.Interfaces;
 using PPlus;
 using PPlus.Controls;
@@ -8,8 +9,14 @@ namespace Nexus.Views;
 
 public class AddContacts(
     IInputValidationHelper inputValidationHelper,
-    IContactCreateService contactCreateService) : IShowContacts
+    IContactCreateService contactCreateService,
+    IFileServerAdministration fileServerAdministration,
+    IFileServerDataHandler fileServerDataHandler,
+    IFileService fileService) : IShowContacts
 {
+
+
+
     /// <summary>
     /// Contact fields to be displayed in the view using the PromptPlus library
     /// </summary>
@@ -24,7 +31,7 @@ public class AddContacts(
     /// <summary>
     /// Run the Add Contacts view
     /// </summary>
-    public void Run()
+    public Task Run()
     {
         do
         {
@@ -44,7 +51,8 @@ public class AddContacts(
 
             // Create contact using the service which internally uses the factory pattern
             var createdContact = contactCreateService.CreateContact(contactDto);
-            Console.WriteLine($"Contact {createdContact.ContactGuid}: {createdContact.FirstName} added successfully!");
+            // Save the contact to the JSON file
+            SaveContact(createdContact);
 
             // Prompt user to add another contact if they wish
             var addAnother = PromptPlus
@@ -63,6 +71,8 @@ public class AddContacts(
                 break;
             }
         } while (true);
+
+        return Task.CompletedTask;
     }
 
 
@@ -90,5 +100,52 @@ public class AddContacts(
             .Run();
 
         return result.Value;
+    }
+
+
+    /// <summary>
+    /// Save the contact to the JSON file
+    /// </summary>
+    /// <param name="createdContact"></param>
+    private async void SaveContact(ContactDto createdContact)
+    {
+        // Check if the file exists and create it if it does not
+        if (await fileServerAdministration.CreateFileAsync("TassaDarLink", "tassadar-contact.json"))
+        {
+            // Check if the contact already exists in the file
+            if (await fileService.CheckContactExistAsync(createdContact.ContactGuid))
+            {
+                PromptPlus.WriteLine("[yellow]Contact already exists in the file.[/]");
+                Thread.Sleep(1500);
+            }
+            // If the contact does not exist in the file
+            else
+            {
+                // Load existing contacts
+                var existingContacts = (await fileServerDataHandler.LoadAllContactsAsync()).ToList();
+                // Add new contact
+                existingContacts.Add(createdContact);
+
+                // Save the contact to the file
+                if (await fileServerDataHandler.SaveContactAsync(existingContacts))
+                {
+                    PromptPlus.WriteLine($"[green] {createdContact.ContactGuid}: {createdContact.FirstName} saved successfully to file![/]");
+                    Thread.Sleep(1500);
+                }
+                // If the contact could not be saved to the file
+                else
+                {
+                    // Display an error message using the PromptPlus library
+                    PromptPlus.WriteLine("[red]Failed to save contact to file. Please try again.[/]");
+                    Thread.Sleep(1500);
+                }
+            }
+        }
+        else
+        {
+            // Display an error message using the PromptPlus library
+            PromptPlus.WriteLine("[red]Failed to create file. Please try again.[/]");
+            Thread.Sleep(1500);
+        }
     }
 }

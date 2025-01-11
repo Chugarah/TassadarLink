@@ -1,6 +1,5 @@
 ﻿using Core.DTOs;
 using Core.Interface;
-using Domain.Models;
 
 namespace Core.Services;
 

@@ -9,12 +9,14 @@ public interface IFileService
 
 public interface IFileServerDataHandler
 {
-    Task<bool> SaveContactAsync(IEnumerable<ContactDto> contactDto);
-    Task<IEnumerable<ContactDto>> LoadContactsAsync();
-    Task<ContactDto> LoadAllContactsAsync();
+    Task<bool> SaveContactAsync(List<ContactDto> contactDto);
+    Task<IEnumerable<ContactDto>> LoadContactByGuid();
+    Task<IEnumerable<ContactDto>> LoadAllContactsAsync();
+
+
 }
 
 public interface IFileServerAdministration
 {
-    Task<bool> CreateFileAsync(string fileName);
+    public Task<bool> CreateFileAsync(string folderName, string fileName);
 }

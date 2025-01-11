@@ -2,5 +2,5 @@
 
 public interface IShowContacts
 {
-    void Run();
+    Task Run();
 }
