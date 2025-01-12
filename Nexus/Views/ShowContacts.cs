@@ -15,6 +15,8 @@ public class ShowContacts(
     IFileServerDataHandler fileServerDataHandler) : IShowContacts
 {
 
+
+
     /// <summary>
     /// Run the ShowContacts view
     /// </summary>
@@ -22,6 +24,7 @@ public class ShowContacts(
     {
         Console.Clear();
         Console.WriteLine("===================================== Tassadar Show Contacts =====================================");
+        PromptPlus.WriteLine("[cyan]Welcome to Tassadar Links, all the contacts are displayed in the table below, enjoy![/]");
         // Get all contacts from the JSON file
         await GetContacts();
     }
@@ -48,20 +51,31 @@ public class ShowContacts(
         // Display contacts in table format
         try
         {
-            PromptPlus
-                .TableSelect<ContactDto>("Contact List", "Select a contact to view details")
-                .AddColumn(x => x.ContactGuid, 36, title: "ID")
-                .AddColumn(x => x.FirstName, 15, title: "First Name")
-                .AddColumn(x => x.LastName, 15, title: "Last Name")
+            // Create a table to display the contacts using PromptPlus
+           var table =  PromptPlus
+                .TableSelect<ContactDto>("", "You can exit to main menu by pressing [green]Enter[/] key")
+                .Title("Contact List")
+                .AddColumn(x => x.ContactGuid, 50, title: "User Guid")
+                .AddColumn(x => x.FirstName, 25, title: "First Name")
+                .AddColumn(x => x.LastName, 25, title: "Last Name")
                 .AddColumn(x => x.Email, 30, title: "Email")
                 .AddColumn(x => x.PhoneNumber, 15, title: "Phone")
                 .Config(cfg =>
                 {
-                    cfg.ShowTooltip(false);
-                    cfg.Description("Contact List");
+                    cfg.ShowTooltip(true);
+                    cfg.EnabledAbortKey(false);
+                    cfg.ShowTooltip();
+                    cfg.Tooltips("Press [green]Enter[/] to view contact details");
+                    cfg.ShowOnlyExistingPagination(false);
                 })
                 .AddItems(contactDto, true)
                 .Layout(TableLayout.SingleGridFull)
+                .Styles(TableSelectStyle.Lines, Style.Default.Foreground(Color.Red))
+                .Styles(TableSelectStyle.Disabled, Style.Default.Foreground(Color.Magenta1))
+                .Styles(TableSelectStyle.Selected, Style.Default.Foreground(Color.Aquamarine1))
+                .Styles(TableSelectStyle.TableContent, Style.Default.Foreground(Color.Yellow))
+                .Styles(TableSelectStyle.TableHeader, Style.Default.Foreground(Color.Blue))
+                .Styles(TableSelectStyle.TableTitle, Style.Default.Foreground(Color.Cyan1))
                 .PageSize(10)
                 .Run();
         }
@@ -72,6 +86,4 @@ public class ShowContacts(
             Thread.Sleep(1500);
         }
     }
-
-
 }

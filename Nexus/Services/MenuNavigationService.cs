@@ -50,6 +50,7 @@ public class MenuNavigationService(
         {
             case 1:
                 await showContacts.Run();
+                await DisplayMenu(route);
                 break;
             case 2:
                 await addContacts.Run();
