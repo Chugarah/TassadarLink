@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Core.DTOs;
-using Core.Interface;
 using Nexus.Interfaces;
 
 namespace Nexus.Helpers;
@@ -8,7 +7,7 @@ namespace Nexus.Helpers;
 public class InputValidationHelper : IInputValidationHelper
 {
     public ValidationResult ValidateRequired(string? text, string displayName)
-        => string.IsNullOrEmpty(text)
+        => string.IsNullOrWhiteSpace(text)
             ? new ValidationResult($"{displayName} cannot be empty")
             : ValidationResult.Success!;
 
