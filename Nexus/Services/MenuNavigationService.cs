@@ -8,10 +8,11 @@ namespace Nexus.Services;
 public class MenuNavigationService(
     IGetMenuService getMenuService,
     IMenuCreateService menuCreateService,
+    IAddContacts addContacts,
     IShowContacts showContacts)
     : IMenuNavigationService
 {
-    public void DisplayMenu(string route)
+    public async Task DisplayMenu(string route)
     {
         // Generate initial menu items
         Console.Clear();
@@ -40,26 +41,26 @@ public class MenuNavigationService(
         }
 
         var selectedMenuItem = selection.Value;
-        HandleMenuSelection(selectedMenuItem, route);
+        await HandleMenuSelection(selectedMenuItem, route);
     }
 
-    private void HandleMenuSelection(MenuItemDto selectedMenuItem, string route)
+    private async Task HandleMenuSelection(MenuItemDto selectedMenuItem, string route)
     {
         switch (selectedMenuItem.MenuId)
         {
             case 1:
-                DisplayMenu(selectedMenuItem.MenuRoute);
+                await showContacts.Run();
                 break;
             case 2:
-                showContacts.Run();
-                DisplayMenu(route);
+                await addContacts.Run();
+                await DisplayMenu(route);
                 break;
             case 3:
                 Console.Clear();
                 Environment.Exit(0);
                 break;
             default:
-                DisplayMenu(route);
+                await DisplayMenu(route);
                 break;
         }
     }

@@ -14,7 +14,11 @@ namespace Nexus;
 
 internal static class Program
 {
-    private static void Main()
+    /// <summary>
+    /// Main entry point for the application.
+    /// Using async Task Main() to support async Main method
+    /// </summary>
+    private static async Task Main()
     {
         // Setting Upp Dependency Injection DI
         // https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-usage
@@ -25,9 +29,9 @@ internal static class Program
         // Let's build the service Provider
         var serviceProvider = services.BuildServiceProvider();
 
-        // Now we can get the HomeView and run i
+        // Now we can get the HomeView and run it
         var homeView = serviceProvider.GetRequiredService<IHomeView>();
-        homeView.Run();
+        await homeView.Run();
     }
     // https://stackoverflow.com/questions/32459670/resolving-instances-with-asp-net-core-di-from-within-configureservices
     // IServiceCollection interface is used for building our dependency injection container
@@ -64,7 +68,9 @@ internal static class Program
         // Registering we are using AddSingleton when we need a single state
         // We want to maintain our state a cross our application
         services.AddSingleton<IHomeView, HomeView>();
-        services.AddSingleton<IShowContacts, AddContacts>();
+        services.AddSingleton<IShowContacts, ShowContacts>();
+
+        services.AddSingleton<IAddContacts, AddContacts>();
         services.AddSingleton<IMenuFactory, MenuFactory>();
 
         // Registrering Helpers

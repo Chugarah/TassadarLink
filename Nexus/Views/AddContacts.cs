@@ -12,10 +12,8 @@ public class AddContacts(
     IContactCreateService contactCreateService,
     IFileServerAdministration fileServerAdministration,
     IFileServerDataHandler fileServerDataHandler,
-    IFileService fileService) : IShowContacts
+    IFileService fileService) : IAddContacts
 {
-
-
 
     /// <summary>
     /// Contact fields to be displayed in the view using the PromptPlus library
@@ -83,6 +81,7 @@ public class AddContacts(
     /// <returns></returns>
     private string GetContactInput((string Property, string Display, string Description, string Pattern) field)
     {
+        // Get input using the PromptPlus library
         var result = PromptPlus
             .Input($"Enter {field.Display}", field.Description)
             .AddValidators(
@@ -90,12 +89,14 @@ public class AddContacts(
                 text => inputValidationHelper.ValidateMinLength(text.ToString(), field.Display),
                 text => inputValidationHelper.ValidatePattern(text.ToString(), field.Pattern, field.Property, field.Display)
             )
+            // Configure the input field
             .Config(cfg =>
             {
                 cfg.EnabledAbortKey(false)
                     .ShowTooltip()
                     .Tooltips($"Enter {field.Display}");
             })
+            // Apply styles to the input field
             .Styles(InputStyles.Answer, Style.Default.Foreground(Color.Cyan1))
             .Run();
 
@@ -110,7 +111,7 @@ public class AddContacts(
     private async void SaveContact(ContactDto createdContact)
     {
         // Check if the file exists and create it if it does not
-        if (await fileServerAdministration.CreateFileAsync("TassaDarLink", "tassadar-contact.json"))
+        if (await fileServerAdministration.CreateFileAsync())
         {
             // Check if the contact already exists in the file
             if (await fileService.CheckContactExistAsync(createdContact.ContactGuid))

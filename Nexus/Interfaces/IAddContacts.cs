@@ -1,6 +1,6 @@
 ﻿namespace Nexus.Interfaces;
 
-public interface IHomeView
+public interface IAddContacts
 {
     Task Run();
 }

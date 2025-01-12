@@ -2,5 +2,5 @@
 
 public interface IMenuNavigationService
 {
-    public void DisplayMenu(string route);
+    Task DisplayMenu(string route);
 }
