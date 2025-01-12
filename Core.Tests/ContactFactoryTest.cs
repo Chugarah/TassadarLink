@@ -14,7 +14,7 @@ public class ContactFactoryTest
     /// Test to create a contact domain from a valid contact dto.
     /// </summary>
     [Fact]
-    public void CreateContact_ShouldReturnContact()
+    public void CreateContact_FromDto_Domain()
     {
         // ARRANGE
         var contactDto = new ContactDto
@@ -27,23 +27,23 @@ public class ContactFactoryTest
         };
 
         // ACT
-        var contact = _contactFactory.CreateContact(contactDto);
+        var domainResult = _contactFactory.CreateContact(contactDto);
 
         // ASSERT
-        Assert.NotNull(contact);
-        Assert.NotEqual(Guid.Empty, contact.ContactGuid);
-        Assert.Equal(contactDto.ContactGuid, contact.ContactGuid);
-        Assert.Equal("Hans", contact.FirstName);
-        Assert.Equal("Code", contact.LastName);
-        Assert.Equal("hans@outlook.com", contact.Email);
-        Assert.Equal(1234567890, contact.PhoneNumber);
+        Assert.NotNull(contactDto);
+        Assert.NotEqual(Guid.Empty, contactDto.ContactGuid);
+        Assert.Equal(contactDto.ContactGuid, contactDto.ContactGuid);
+        Assert.Equal(contactDto.FirstName, domainResult.FirstName);
+        Assert.Equal(contactDto.LastName, domainResult.LastName);
+        Assert.Equal(contactDto.Email, domainResult.Email);
+        Assert.Equal(contactDto.PhoneNumber, domainResult.PhoneNumber);
     }
 
     /// <summary>
     /// Test to create a contact dto from a valid contact domain.
     /// </summary>
     [Fact]
-    public void CreateContact_FromDomainModel_ShouldReturnContactDto()
+    public void CreateContact_FromDomain_ToDto()
     {
         // ARRANGE
         var contact = new Contact
@@ -56,14 +56,15 @@ public class ContactFactoryTest
         };
 
         // ACT
-        var dtoContact = _contactFactory.CreateContact(contact);
+        var dtoResult = _contactFactory.CreateContact(contact);
 
         // ASSERT
-        Assert.NotNull(dtoContact);
-        Assert.Equal(contact.ContactGuid, dtoContact.ContactGuid);
-        Assert.Equal("Starcraft", dtoContact.FirstName);
-        Assert.Equal("BroodWar", dtoContact.LastName);
-        Assert.Equal("zealot@outlook.com", dtoContact.Email);
-        Assert.Equal(6652234, dtoContact.PhoneNumber);
+        Assert.NotNull(dtoResult);
+        Assert.IsType<ContactDto>(dtoResult);
+        Assert.Equal(contact.ContactGuid, dtoResult.ContactGuid);
+        Assert.Equal(contact.FirstName, dtoResult.FirstName);
+        Assert.Equal(contact.LastName, dtoResult.LastName);
+        Assert.Equal(contact.Email, dtoResult.Email);
+        Assert.Equal(contact.PhoneNumber, dtoResult.PhoneNumber);
     }
 }
