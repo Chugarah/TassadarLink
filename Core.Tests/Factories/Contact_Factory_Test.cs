@@ -3,7 +3,7 @@ using Core.Factories;
 using Core.Helpers;
 using Domain.Models;
 
-namespace Core.Tests;
+namespace Core.Tests.Factories;
 
 public class ContactFactoryTest
 {
