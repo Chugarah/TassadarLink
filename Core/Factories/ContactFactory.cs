@@ -28,7 +28,9 @@ public class ContactFactory(IIdHelpers idHelpers) : IContactFactory
     {
         return new Contact
         {
-            ContactGuid = idHelpers.CreateGuid(),
+            // If the contact guid is not empty, use the contact guid, else create a new guid
+            // Got Help from Phind AI for this so we could create the test
+            ContactGuid = contactDto.ContactGuid != Guid.Empty ? contactDto.ContactGuid : idHelpers.CreateGuid(),
             FirstName = contactDto.FirstName,
             LastName = contactDto.LastName,
             Email = contactDto.Email,
